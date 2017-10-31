@@ -1,0 +1,296 @@
+// Make a function isPrime in JS that will return a boolean on whether a number is prime or not
+function isPrime(n) {
+	
+	if(n < 2)
+		return false;
+	for(i = 2; i < Math.ceil(Math.sqrt(n)) + 1 ; i++) {
+		if(n % i === 0 && i !== n )
+			return false;
+    }
+	return true;
+}
+
+// Implement factorial in JS
+/* Using tail call optimization */
+function tailFactorial(n, total){
+    switch(n) {
+        case 0:
+            return 1;
+        case 1: return total;
+        default: return tailFactorial(n-1, n * total)
+            }
+}
+
+function factorial(n) {
+  return tailFactorial(n,1);
+}
+
+//Fibonacci sequence 
+function fib(n) {
+	switch(n) {
+        case 0: return 0;
+        case 1: return 1;
+        default: return fib(n-1) + fib(n-2);
+    }
+}
+
+//Check if an array is sorted (ascending)
+function isSorted(values) {
+	if(!values || !values.length)
+ 		return true;
+	var prev = values[0];
+	var flag = true;
+    values.forEach(function(ele){
+        if(prev > ele)
+            flag = false;
+		prev = ele;
+    });
+	return flag;
+}
+
+//implement filter([1,2,4,5], n => n < 3)
+function filter(arr, fn) {
+    let result = [];
+    arr.forEach(function(ele){
+        if(fn(ele))
+            result.push(ele);
+    });
+    return result;
+}
+
+//Implement reduce function ``reduce([1, 2, 3, 4], (a, b) => a + b, 0)``
+reduce = (arr, fn, result) => {
+    if(!arr.length)
+        return result;
+    for(i= 0; i < arr.length ; i++){
+        result  = fn(result, arr[i])
+    }
+    return result;
+}
+
+//Reverse a string ( reverse method not allowed)
+reverse = x => {
+    if(!x)
+        return '';
+	let result = '';
+    let j = x.length - 1;
+    while(j >= 0) {
+		result += x[j];
+		j--;
+	}
+	return result;
+};
+
+//Implement indexOf
+indexOf = (arr, element) => {
+	let ind = -1;
+	arr.forEach((ele, index) => {
+		if(ele == element)
+			ind = index;
+    });
+	return ind;
+};
+
+//Check if a string is a palindrome or not
+isPalindrome = s => {
+	if(!s) 
+		return false;
+	s = s.replace(/\s/g,'');
+	console.log(s);
+    let i = 0, j = s.length - 1;
+   	while(i < j) {
+		if(s[i].toLowerCase() === s[j].toLowerCase()) {
+			i++; j--;
+        }
+		else{
+			return false;
+        }
+    }
+	return true;
+ };
+ 
+ //missing - Takes an unsorted array of unique numbers (ie. no repeats) from 1 through some number n, and returns the missing number in the sequence 
+ missing = (arr) => {
+	let max = Number.MIN_VALUE;	
+    let calculatedSum = arr.reduce((acc,ele) => { 
+		acc += ele;
+		max = Math.max(max, ele);
+		return acc;
+    },0);
+	
+	let sum =  max * (max + 1 ) / 2;
+	if(sum - calculatedSum)
+		return sum - calculatedSum;
+	else 
+		return undefined;
+};
+
+//Is balanced paranthesis
+isBalanced = (str) => { 
+	let stack = [],  i;
+	for(i = 0; i < str.length; i++) { 
+        if(str[i] === '{') 
+			stack.push('{');
+		else if(str[i] === '}') { 
+			if(!stack.length)
+				return false;
+			else 
+				stack.pop();
+        }
+    }
+	return !stack.length;
+};
+
+//Fibonacci memoized
+fib2 = memoize(n => {
+  switch (n) {
+    case 0: return 0
+    case 1: return 1
+    default: return fib2(n - 1) + fib2(n - 2)
+  }
+})
+
+//isBalanced with different types of brackets
+isBalanced2 = (str) => { 
+	let stack = [],  i;
+	const obj = { 
+		'(' : ')',
+		'{': '}',
+		'[': ']'
+    };
+			
+	for(i = 0; i < str.length; i++) { 
+        if(str[i] === '{' || str[i] === '(' || str[i] === '[') 
+			stack.push(str[i]);
+		else if(str[i] === '}' || str[i] === ')' || str[i] === ']') { 
+			if(!stack.length)
+				return false;
+			else {
+				if(obj[stack.pop()] !== str[i])
+					return false;
+            }
+        }
+    }
+	return !stack.length;
+};
+
+//Merge sort implementation
+merge = (left, right) => { 
+     let result = [];
+     let leftIndex = 0, rightIndex = 0;
+	 while(leftIndex < left.length && rightIndex < right.length) { 
+		result.push(left[leftIndex] < right[rightIndex] ? left[leftIndex++] : right[rightIndex++]);
+     }
+		return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+ };
+
+sort = array => { 
+    if(array.length < 2)
+        return array;
+    let mid = Math.floor(array.length /2);
+	let left = array.slice(0, mid);
+    let right = array.slice(mid);
+    return merge(sort(left), sort(right));
+};
+
+//Implement binary search
+binarySearch = (arr, left, right, number) => {
+	if(left > right)
+		return undefined;
+    let mid = Math.floor(left + (right -left) /2);
+	if(arr[mid] == number)
+		return mid;
+	else if(arr[mid] > number) 
+        return binarySearch(arr, left, mid - 1);
+	else 
+		return binarySearch(arr, mid + 1, right);
+};
+
+includes = (arr, n) => { 
+    let index = binarySearch(arr, 0, arr.length -1, n);
+	return !!index;
+};
+
+ 
+//assign deeply - Like Object.assign, but merges objects deeply. (only numbers and other objects and not arrays, functions, etc
+assignDeep = (target, ...sources) => {
+    for(let source of sources) {
+        for(let key in source) {
+            if(isObject(source[key])){ 
+				if(!isObject(target[key])) {
+					target[key] = {};
+            	}
+				assignDeep(target[key], source[key]);
+        	} else { 
+				target[key] = source[key];
+            }
+    	}
+    }
+	return target;
+};
+
+//Async reduce
+let reduceAsync = async (arr, fn, value) => { 
+    for(let a of arr) 
+  		value = fn(value, await a());
+    return value;
+};
+
+
+//seq takes an array of functions that return promises, and resolves them one after the other
+let seq = async (promises) => {
+	let result = []; 
+    for(let a of promises)
+		result.push(await a());
+	return result;
+}
+
+//Permutation of a string
+1. Generator method
+ function *permute(a, n = a.length) {
+  if (n <= 1) yield a.slice();
+  else for (let i = 0; i < n; i++) {
+    yield *permute(a, n - 1);
+    const j = n % 2 ? 0 : i;
+    [a[n-1], a[j]] = [a[j], a[n-1]];
+  }
+}
+
+console.log(Array.from(permute("xyz".split(''))).map(perm => perm.join('')));
+
+2. Normal method
+permut = (str) => {
+    if(str.length < 2) return str;
+	let permutations = [];
+	for(let i = 0; i < str.length; i++) {
+        let char = str[i];
+		if(str.indexOf(char) !== i)
+			continue;
+		let remaining = str.slice(0, i) + str.slice(i + 1, str.length);
+		for(let subPermut of permut(remaining))
+			permutations.push(char + subPermut);
+    }
+	return permutations;
+}
+
+3. Recursive method
+ recurPermut = (arr, l = 0, r = str.length) => {
+    let i, permutations = [];
+    if(l == r) {
+		console.log(arr);
+		permutations.push(arr);
+    }
+    else { 
+		for(i = l; i < r; i++) { 
+			swap(arr, l, i);
+			recurPermut(arr, l+1, r);
+			swap(arr, l, i);
+        }
+    }
+};
+
+
+
+
+
+
