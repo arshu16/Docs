@@ -10,6 +10,7 @@ This repository contains links to some awesome material if you want to get bette
 
 -Indepth and tricky JS questions
 1. It'll maybe help you nail that JS interview -> https://www.thatjsdude.com/interview
+2. https://performancejs.com/post/hde6d32/The-Best-Frontend-JavaScript-Interview-Questions-%28written-by-a-Frontend-Engineer%29
 
 /* --------- */
 More to come soon - I’m young and still learning, this will populate as I go through life.
