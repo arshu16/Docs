@@ -8,5 +8,8 @@ This repository contains links to some awesome material if you want to get bette
 -Angular/Angular2
 1. You want to migrate from angular 1 to angular 2 or just want to learn both of them -> http://ngmigrate.telerik.com/
 
+-Indepth and tricky JS questions
+1. It'll maybe help you nail that JS interview -> https://www.thatjsdude.com/interview
+
 /* --------- */
 More to come soon - I’m young and still learning, this will populate as I go through life.
