@@ -289,6 +289,163 @@ permut = (str) => {
     }
 };
 
+// Implement debounce function 
+debounce = (callback, time) => {
+    let lastTimeoutId;
+	return _ => {
+        if(lastTimeoutId)
+            window.clearTimeout(lastTimeoutId);
+        lastTimeoutId = window.setTimeout(()=> {
+            lastTimeoutId = null;
+            callback();
+        }, time);
+    };
+};
+
+// Linked list implementation
+class LinkedList { 
+   constructor(head, ...tail) {
+	this.head = head;
+	this.tail = tail.length ? new LinkedList(...tail) : null;
+   }
+	
+   add(item) {
+	if(this.tail) {
+		this.tail.add(item);
+        }else {
+		this.tail = new LinkedList(item);
+        }
+    }
+	
+    has(item) {
+	if(this.head === item)
+		return true;
+	if(this.tail == null)
+		return false;
+	return this.tail.has(item);
+    }
+}
+
+//Hashmap in javascript
+class HashMap { 
+    constructor() {
+		this.data = [];
+    }
+	
+   get(key) {
+	let index = hash(key);
+	let slot = this.data[index];
+	if(!slot) 
+		return undefined;
+	for(let [k,v] of slot) {
+		if(key === k)
+			return v;
+        }
+    }
+	
+    set(key, value) {
+	let index = hash(key);
+	if(!this.data[index])
+		this.data[index] = [];
+	let slot = this.data[index];
+	let indexInSlot = 0;
+	while(slot[indexInSlot]) {
+		if(slot[indexInSlot][0] == key) {
+			break;
+        	}
+		indexInSlot++;
+    	}
+     	slot[indexInSlot] = [key,value];
+    }
+}
+
+//Implement BST in javascript
+class Node {
+   constructor(data, left = null, right = null) {
+	this.data = data;
+	this.left = left;
+	this.right = right;
+    }
+}
+
+class BST {
+    constructor() {
+		this.root = null;
+    }
+    insert(data) {
+		const node = new Node(data);
+		if(!this.root)
+            this.root = node;
+        else { 
+			let current = this.root;
+			let parent;
+			while(true) {
+				parent = current;
+				if(data < current.data) {
+					current = current.left;
+					if(!current) {
+						parent.left = node;
+						break;
+                    }
+                } else {
+					current = current.right;
+					if(!current) {
+						parent.right = node;
+						break;
+                    }
+                }
+            }
+        }
+    }
+	
+    getMin() { 
+		let current = this.root;
+		while(current.left != null)
+			current = current.left;
+    	return current;
+    }
+
+    getMax() { 
+		let current = this.root;
+		while(current.right != null)
+			current = current.right;
+    	return current;
+    }
+	
+    find(data) {
+		let current = this.root;
+		while(current.data != data) {
+			if(data < current.data) {
+				current = current.left;
+            } else {
+				current = current.right;
+            }
+			if(!current)
+				return null;
+        }
+		return current;
+    }
+}
+
+	
+				
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
